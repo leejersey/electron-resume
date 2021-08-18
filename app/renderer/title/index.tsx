@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.less';
 
 interface IProps {
   text: string; // 标题
@@ -6,7 +7,11 @@ interface IProps {
 }
 
 function Title({ text, styles }) {
-  return <div style={styles}>{text}</div>;
+  return (
+    <div style={styles} styleName="title">
+      {text}
+    </div>
+  );
 }
 
 export default Title;

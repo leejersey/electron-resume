@@ -1,5 +1,5 @@
 // renderer/container/root/index.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { shell } from 'electron';
 import './index.less';
 import { useHistory } from 'react-router';
@@ -7,8 +7,30 @@ import Logo from '@assets/logo.png';
 import { ROUTER_ENTRY, ROUTER_KEY } from '@common/constants/router';
 import { isHttpOrHttpsUrl } from '@common/utils/router';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 function Root() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const appName = useSelector((state: any) => state.globalModel.appName);
+  console.log('appName = ', appName);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('3s 后修改...');
+      dispatch({
+        type: 'globalModel/setStore',
+        payload: {
+          key: 'appName',
+          values: 'visResumeMook',
+        },
+      });
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    console.log('appName = ', appName);
+  }, [appName]);
 
   const onRouterToLink = (router: TSRouter.Item) => {
     if (isHttpOrHttpsUrl(router.url)) {
